@@ -59,7 +59,7 @@ export const Button = styled.button`
 
 export const Text = styled.p`
   font-size: 19.2px;
-  margin-top: 0px;
+  margin-top: 20px;
   color: white;
   text-align: center;
   @media (max-width: 600px) {

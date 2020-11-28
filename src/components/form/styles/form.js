@@ -17,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export const Error = styled.div`
-  background: #e87c03;
+  background: red;
   border-radius: 4px;
   font-size: 14px;
   margin: 0 0 16px;
@@ -37,6 +37,7 @@ export const Title = styled.h1`
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 28px;
+  margin-top:0px;
 `;
 
 export const Text = styled.p`
@@ -65,12 +66,12 @@ export const Input = styled.input`
   border-radius: 4px;
   border: 0;
   color: #fff;
-  height: 50px;
+  height: 40px;
   line-height: 50px;
   padding: 5px 20px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   &:last-of-type {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 `;
 

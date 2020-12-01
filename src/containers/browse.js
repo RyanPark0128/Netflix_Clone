@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SelectProfileContainer } from './profiles';
 import { FirebaseContext } from '../context/firebase';
-import { Loading, Header, Card } from '../components'
+import { Loading, Header, Card, Player } from '../components'
 import { FooterContainer } from './footer';
+import Fuse from 'fuse.js';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
 
@@ -11,6 +12,7 @@ export function BrowseContainer({ slides }) {
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
     const [slideRows, setSlideRows] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const { firebase } = useContext(FirebaseContext);
     const user = firebase.auth().currentUser || {};
 
@@ -23,6 +25,17 @@ export function BrowseContainer({ slides }) {
     useEffect(() => {
         setSlideRows(slides[category]);
     }, [slides, category]);
+
+    useEffect(() => {
+        const fuse = new Fuse(slideRows, { keys: ['data.description', 'data.title', 'data.genre'] });
+        const results = fuse.search(searchTerm).map(({ item }) => item);
+
+        if (slideRows.length > 0 && searchTerm.length > 3 && results.length > 0) {
+            setSlideRows(results);
+        } else {
+            setSlideRows(slides[category]);
+        }
+    }, [searchTerm]);
 
     return profile.displayName ? (
         <>
@@ -40,7 +53,7 @@ export function BrowseContainer({ slides }) {
                         </Header.TextLink>
                     </Header.Group>
                     <Header.Group>
-                        <Header.Search />
+                        <Header.Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                         <Header.Profile>
                             <Header.Picture src={user.photoURL} />
                             <Header.Dropdown>
@@ -82,6 +95,10 @@ export function BrowseContainer({ slides }) {
                             ))}
                         </Card.Entities>
                         <Card.Feature category={category}>
+                            <Player>
+                                <Player.Button />
+                                <Player.Video src="/videos/bunny.mp4" />
+                            </Player>
                         </Card.Feature>
                     </Card>
                 ))}

@@ -87,7 +87,7 @@ export const Item = styled.div`
   cursor: pointer;
   transition: transform 0.2s;
   &:hover {
-    transform: scale(1.3);
+    transform: scale(1.1);
     z-index: 99;
   }
   @media (min-width: 1200px) {
